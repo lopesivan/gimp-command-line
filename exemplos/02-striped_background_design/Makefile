@@ -9,12 +9,12 @@ GIMP_QUIT     = -b "pdb.gimp_quit(1)"
 TEXTURE_FILE_PATH = ${PWD}/IMG_0001.jpg
 MOON_TEXTURE_FILE_PATH = ${PWD}/moon.png
 #MOON_TEXTURE_FILE_PATH = ${PWD}/Cat-cats-32958715-1440-900.jpg
-MY_MESSAGE_1 = Ivan & Cristina
+MY_MESSAGE_1 = Ivan Carlos
 #MY_MESSAGE_1 = Ivan Carlos
 
 #HD1080
-#width = 1920
-#height= 1080
+width = 1920
+height= 1080
 
 #HD720
 #width   =  1280
@@ -23,8 +23,8 @@ MY_MESSAGE_1 = Ivan & Cristina
 #width   =  7680
 #height  =  4320
 
-width   =  300
-height  =  200
+# width   =  300
+# height  =  200
 
 #width   =  2400
 #height  =  1600
