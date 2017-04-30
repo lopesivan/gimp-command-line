@@ -1,0 +1,2 @@
+#git clone file://${HOME}/git/gimp.git
+#git remote add origin file://${HOME}/git/gimp.git
