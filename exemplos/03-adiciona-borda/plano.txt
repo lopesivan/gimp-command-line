@@ -1,0 +1,36 @@
+import os, glob, sys, time
+import gimpfu # access constantes
+from gimpfu import *
+
+filename = "/home/ivan/workspace/learning/learning-gimp/scripts/exemplos/python/02-adiciona-borda/pnggrad8rgb.png"
+
+print("Load file \"%s\"" % filename)
+
+image = pdb.gimp_file_load(filename, filename)
+width = image.width
+height = image.height
+
+pdb.gimp_context_set_background((0,0,0))
+pdb.gimp_context_set_foreground((255, 255, 255))
+
+layer = pdb.gimp_layer_new(image,width, height, gimpfu.RGB_IMAGE, "base", 100, gimpfu.NORMAL_MODE)
+
+pdb.gimp_layer_add_alpha(layer)
+
+pdb.gimp_image_add_layer(image, layer, 0)
+pdb.gimp_drawable_fill(layer, gimpfu.FOREGROUND_FILL)
+
+display = pdb.gimp_display_new(image)
+
+pdb.gimp_selection_none (image)
+
+# Cria uma seleção em formato de retângulo
+# mantendo uma sombra de 10 pixels de cada lado
+pixel = 10
+pdb.gimp_rect_select (image,10, 10, (width -2*pixel), (height-2*pixel), 0, 0,0)
+
+pdb.gimp_edit_clear (layer)
+
+# retira a seleção da imagem
+pdb.gimp_selection_none (image)
+

@@ -1,0 +1,76 @@
+images_input  = image.png
+images_output = $(addprefix new-, $(images_input))
+
+SCRIPT        = script.py
+GIMP          =/usr/bin/gimp
+GIMP_OPT      = --batch-interpreter python-fu-eval --batch -
+GIMP_QUIT     = -b "pdb.gimp_quit(1)"
+
+ifdef TEXTURE_FILE_PATH
+	$(info TEXTURE_FILE_PATH defined)
+else
+	$(info TEXTURE_FILE_PATH undefined)
+	TEXTURE_FILE_PATH = /home/ivan/workspace/learning/learning-gimp/scripts/exemplos/python/02-striped_background_design/IMG_0001.jpg
+endif
+
+ifdef MOON_TEXTURE_FILE_PATH
+	$(info MOON_TEXTURE_FILE_PATH defined)
+else
+	$(info MOON_TEXTURE_FILE_PATH undefined)
+	MOON_TEXTURE_FILE_PATH = /home/ivan/workspace/learning/learning-gimp/scripts/exemplos/python/02-striped_background_design/moon.png
+endif
+
+ifdef MY_MESSAGE_1
+	$(info MY_MESSAGE_1 defined)
+else
+	$(info MY_MESSAGE_1 undefined)
+	MY_MESSAGE_1 = Gimp é foda
+endif
+
+ifdef HD1080
+	$(info HD1080 defined)
+else
+	$(info HD1080 undefined)
+	width = 1920
+	height= 1080
+endif
+
+	#HD720
+	#width   =  1280
+	#height  =  768
+
+	#width   =  7680
+	#height  =  4320
+
+	width   =  600
+	height  =  400
+
+	#width   =  2400
+	#height  =  1600
+
+
+##############################################################################
+ARGV              = '$(width)', '$(height)', '$(TEXTURE_FILE_PATH)', '$(MOON_TEXTURE_FILE_PATH)', '$(MY_MESSAGE_1)'
+
+All: run
+
+all: $(TARGETS)
+
+deploy: clean run
+
+new-image.png:
+	cat $(SCRIPT) |$(GIMP) -i $(GIMP_OPT) -b "import sys; sys.path=['.']+sys.path; import $(SCRIPT:.py=);$(SCRIPT:.py=).run($(ARGV), False)" $(GIMP_QUIT)
+
+interativo:
+	cat $(SCRIPT) |$(GIMP) $(GIMP_OPT) -b "import sys; sys.path=['.']+sys.path; import gimpdraw; import $(SCRIPT:.py=);$(SCRIPT:.py=).run($(ARGV), True)"
+
+run: new-image.png
+
+OUT = $(images_input) $(images_output)  processed
+
+show:
+	eog processed/new-image.png
+
+clean:
+	@rm -rf $(TARGETS) $(OUT) script.pyc
+#EOF
